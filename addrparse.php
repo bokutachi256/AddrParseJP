@@ -22,15 +22,19 @@
 		echo "変換後：".AddrConv($value)."\n";
 		echo "------------\n";
 	}
-	
-
 
 	// 住所データベースへのアクセス
 
 	try{
 		$ad_db = new PDO('sqlite:ad_table.db');
-		$sql="select * from address_tab";
-		$res=$ad_db->query($sql);
+		$sql="SELECT * FROM address_tab WHERE chome !=0";
+		foreach($ad_db->query($sql) as $row ){
+			$add_txt1=$row['shichoson'].$row['ku'].$row['chomei'];
+			$add_txt2=$row['chome']."丁目".$row['banchi']."番".$row['go']."号";
+			echo $add_txt1.$add_txt2."\n";
+			echo $add_txt1.AddrConv($add_txt2)."\n";
+			echo "--------\n";
+		}
 	}catch (PDOException $e){
 		print('Connection failed:'.$e->getMessage());
 		die();
@@ -44,7 +48,7 @@
 	}
 
 	$db=null;
-
+	
 function AddrConv($indata){
 
 	// 漢数字->半角算用数字変換テーブル

@@ -1,19 +1,27 @@
 <?php
 
-$dbname="ad_table.db";
+	include("libAddrParse.php");
+	
 try{
-//	$db = new PDO('sqlite::memory:');
-	$db = new PDO('sqlite:ad_table.db');
-
-	$sql="drop table address_tab";
-	echo $sql."\n";
-	$res=$db->query($sql);
-	$sql="create table address_tab(id int, shichoson text, ku text,
-		chomei text, chome int, banchi int, go int)";
-	$res=$db->query($sql);	
+	$ad_db = new PDO('sqlite:ad_table.db');
+	$sql="SELECT * FROM address_tab";
+	foreach($ad_db->query($sql) as $row ){
+		$add_txt1=$row['shichoson'].$row['ku'].$row['chomei'];
+		$add_txt2=$row['chome']."丁目".$row['banchi']."番".$row['go']."号";
+		echo $add_txt1.$add_txt2."\n";
+//		echo $add_txt1.AddrConv($add_txt2)."\n";
+		echo "--------\n";
+	}
 }catch (PDOException $e){
- 	   print('Connection failed:'.$e->getMessage());
-    die();
+	print('Connection failed:'.$e->getMessage());
+	die();
+}
+
+try{
+	$db = new PDO('sqlite::memory:');
+}catch (PDOException $e){
+	print('Connection failed:'.$e->getMessage());
+	die();
 }
 
 $db=null;

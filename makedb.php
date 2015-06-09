@@ -1,4 +1,8 @@
 <?php
+
+/*
+ * データベースをいじるプログラム
+ */
 	mb_regex_encoding('UTF-8');
 	include("libAddrParse.php");
 	

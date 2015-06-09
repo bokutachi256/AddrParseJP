@@ -1,7 +1,7 @@
 <?php
 	include("libAddrParse.php");
 	mb_regex_encoding('UTF-8');
-
+	
 	// サンプルの住所
 	
 	//貴族院多額納税者名鑑（大正5）

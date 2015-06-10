@@ -74,13 +74,16 @@
 		"麹町區富士見町千八十番",
 		"麹町區富士見町百八番",
 		"麹町區富士見町千八番",
+		"麹町區富士見町千八",
 		"麹町區富士見町千八百番",
 		
 	);
 
 	foreach($txt as $key=>$value){
 		echo "オリジナル：".$value."\n";
+		$result = AddrConv($value);
 		echo "変換後：".AddrConv($value)."\n";
+		echo dpmatching($value, $result, 2, 1)."\n";
 		echo "------------\n";
 	}
 

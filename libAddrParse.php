@@ -35,7 +35,7 @@ function AddrConv($indata){
 	$pattern="([0-9])(百)([0-9]+)([^十]|$)";
 	$txt1=mb_ereg_replace($pattern, '\10\3\4', $txt1);
 	// '1千5'->1005のパターン
-	$pattern="([0-9])(千)([0-9]+)([^十]&[^百]|$)";
+	$pattern="([0-9])(千)([0-9]+)([^十百]|$)";
 	$txt1=mb_ereg_replace($pattern, '\100\3\4', $txt1);
 	// '1十'で終わるパターンへの対応
 	$pattern="([0-9])(十)([^0-9]+|$)";

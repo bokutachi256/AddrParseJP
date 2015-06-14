@@ -90,7 +90,7 @@
 	/*
 	// 住所データベースへのアクセス
 	try{
-		$ad_db = new PDO('sqlite:ad_table.db');
+		$ad_db = new PDO('sqlite:ad_table.sqlite');
 		$sql="SELECT * FROM address_tab WHERE chome !=0";
 		foreach($ad_db->query($sql) as $row ){
 			$add_txt1=$row['shichoson'].$row['ku'].$row['chomei'];

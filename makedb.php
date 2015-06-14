@@ -7,7 +7,7 @@
 	include("libAddrParse.php");
 	
 try{
-	$ad_db = new PDO('sqlite:ad_table.db');
+	$ad_db = new PDO('sqlite:ad_table.sqlite');
 	$sql="SELECT * FROM address_tab";
 	foreach($ad_db->query($sql) as $row ){
 		$add_txt1=$row['shichoson'].$row['ku'].$row['chomei'];
@@ -15,10 +15,13 @@ try{
 		echo $add_txt1."\n";
 		echo $add_txt2."\n";
 
-		$pattern="{^0丁目}";
+		$pattern="^0丁目";
+		$txt1 = mb_ereg_replace($pattern,'',$add_txt2);
+		$pattern="[^0-9]+0番";
 		$txt1 = mb_ereg_replace($pattern,'',$txt1);
-		
-		echo $add_txt1.AddrConv($add_txt2)."\n";
+		$pattern="[^0-9]+0号";
+		$txt1 = mb_ereg_replace($pattern,'',$txt1);
+		echo $add_txt1.AddrConv($txt1)."\n";
 		echo "--------\n";
 	}
 }catch (PDOException $e){

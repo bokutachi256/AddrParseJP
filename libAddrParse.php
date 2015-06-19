@@ -53,12 +53,29 @@ function AddrConv($indata){
 		$txt1=mb_ereg_replace($pattern, '\1\3', $txt1);
 	}
 
-	// 町丁目・番・号のデリミタを'-'にする
-	$pattern="([0-9]+)([^0-9]+)";
+	// 「丁目」を"@"に置き換え
+	$pattern="([0-9]+)(丁[^0-9]*)";
+	$txt1 = mb_ereg_replace($pattern,'\1@',$txt1);
+	// 「番」を"#"に置き換え
+	$pattern="([0-9]+)(番[^0-9]*)";
+	$txt1 = mb_ereg_replace($pattern,'\1#',$txt1);
+	// 「号」を"-"に置き換え
+	$pattern="([0-9]+)(号[^0-9]*)";
 	$txt1 = mb_ereg_replace($pattern,'\1-',$txt1);
-//	$txt1 = mb_ereg_replace('[^0-9]$','',$txt1);
-	$txt1 = mb_ereg_replace('-$','',$txt1);
 	
+	// 町丁目・番・号のデリミタを'-'にする
+	$pattern="([0-9]+)([^0-9@#-]+)";
+	$txt1 = mb_ereg_replace($pattern,'\1-',$txt1);
+	$txt1 = mb_ereg_replace('-$','',$txt1);
+
+	// 丁目・番・号になっている住所のデリミタを変更
+	$pattern="([0-9]+)(-)([0-9]+)(-)([0-9]+)";
+	$txt1 = mb_ereg_replace($pattern,'\1@\3#\5-',$txt1);
+	
+	// 3丁目2の1（3@2-1）を3@2#1-に変換
+	$pattern="([0-9]+@)([0-9]+)(-)([0-9]+)";
+	$txt1 = mb_ereg_replace($pattern,'\1\2#\4-',$txt1);
+
 	return $txt1;
 }
 
